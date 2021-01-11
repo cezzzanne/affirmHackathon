@@ -26,43 +26,36 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabBar } from './pages/TabBar';
+import { Explore } from './pages/Explore';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { FullPageProduct, fullPageProduct } from './pages/FullPageProduct';
+import {AffirmAccount} from './pages/AffirmAccount';
+import {Profile} from './pages/Profile';
 
 
-function HomeScreen() {
+
+const Stack = createStackNavigator();
+
+function MainStackNav() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Explore!</Text>
-    </View>
+    <Stack.Navigator headerMode={false} initialRouteName="Explore">
+        <Stack.Screen name="Explore" component={Explore} />
+        <Stack.Screen name="Discover" component={FullPageProduct} />
+        <Stack.Screen name="AffirmAccount" component={AffirmAccount} />
+
+    </Stack.Navigator>
   );
 }
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile!</Text>
-    </View>
-  );
-}
-
-function DiscoverScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Discover!</Text>
-    </View>
-  );
-}
-
 const Tab = createMaterialTopTabNavigator();
 
 const App: () => React$Node = () => {
   return (
     <>
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Explore" swipeEnabled={true} tabBarPosition="bottom" tabBar={props => <TabBar {...props} />}>
-      <Tab.Screen name="Discover" component={DiscoverScreen} />
-        <Tab.Screen name="Explore" component={HomeScreen} />
-        <Tab.Screen name="Profile" component={SettingsScreen} />
+      <Tab.Navigator initialRouteName="MainStackNav" swipeEnabled={false} tabBarPosition="bottom" tabBar={props => <TabBar {...props} />}>
+        <Tab.Screen name="MainStackNav" component={MainStackNav} />
+        <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
     </>
